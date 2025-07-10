@@ -1,9 +1,10 @@
 import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
-import { generateUniqueString } from '$lib/utils.js';
+import { nanoid } from 'nanoid';
 
 export const polls = sqliteTable('polls', {
 	id: integer().primaryKey({ autoIncrement: true }),
-	slug: text().$default(() => generateUniqueString()),
+	slug: text().$default(() => nanoid()),
+	question: text('question').notNull(),
 	createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
 	expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull()
 });
@@ -13,8 +14,7 @@ export const pollOptions = sqliteTable('poll_options', {
 	pollId: integer('poll_id')
 		.notNull()
 		.references(() => polls.id, { onDelete: 'cascade' }),
-	text: text('text').notNull(),
-	votes: integer('votes').notNull().default(0)
+	text: text('text').notNull()
 });
 
 export const pollVotes = sqliteTable('poll_votes', {
