@@ -5,4 +5,6 @@
 </script>
 
 <ModeWatcher />
-{@render children()}
+<div class="flex justify-center py-[10vh]">
+	{@render children()}
+</div>
