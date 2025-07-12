@@ -27,9 +27,9 @@
 	}
 </script>
 
-<Card.Root class="w-full max-w-sm">
+<Card.Root class="w-full max-w-md">
 	<Card.Header>
-		<Card.Title class="text-center text-2xl">Create poll</Card.Title>
+		<Card.Title class="text-center text-2xl">Create a poll</Card.Title>
 	</Card.Header>
 	<Card.Content>
 		<form method="POST" use:enhance class="flex flex-col gap-6">
@@ -37,20 +37,20 @@
 				<Control>
 					{#snippet children({ props })}
 						<div class="flex flex-col justify-center">
-							<Label class="text-base">Question</Label>
+							<Label class="mb-2 text-base leading-4">Question</Label>
 							<Input {...props} bind:value={$formData.question} />
 							<FieldErrors />
 						</div>
 					{/snippet}
 				</Control>
 			</Field>
-			<Fieldset {form} name="options" class="flex flex-col gap-3">
-				<Label class="text-base leading-4">Options</Label>
+			<Fieldset {form} name="options" class="flex flex-col">
+				<Label class="mb-3 text-base leading-4">Options</Label>
 				{#each $formData.options as _, i}
 					<ElementField {form} name="options[{i}]">
 						<Control>
 							{#snippet children({ props })}
-								<div class="flex items-center justify-center gap-2">
+								<div class="mb-3 flex items-center justify-center gap-2">
 									<Label class="text-md flex size-9 items-center justify-center">{i + 1}.</Label>
 									<Input {...props} bind:value={$formData.options[i]} />
 									<Button size="icon" variant="destructive" onclick={() => removeOptionByIndex(i)}>
@@ -66,6 +66,18 @@
 				</Button>
 				<FieldErrors />
 			</Fieldset>
+			<Field {form} name="expired">
+				<Control>
+					{#snippet children({ props })}
+						<div class="flex flex-col justify-center">
+							<Label class="mb-2 text-base leading-4">Expiration time (hours)</Label>
+							<Input type="number" {...props} bind:value={$formData.expired} />
+							<FieldErrors />
+						</div>
+					{/snippet}
+				</Control>
+			</Field>
+			<Button>Create</Button>
 		</form>
 	</Card.Content>
 </Card.Root>
