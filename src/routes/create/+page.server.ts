@@ -24,24 +24,21 @@ export const actions: Actions = {
 
 		const now = new Date();
 		const expiresIn = new Date(now.getTime() + form.data.expired * 60 * 60 * 1000);
-		const slug = nanoid();
+		const id = nanoid();
 
 		try {
 			const poll: any = {
-				slug: slug,
+				id: id,
 				question: form.data.question,
 				createdAt: now,
 				expiresAt: expiresIn
 			};
 
-			const [insertedPoll] = await db
-				.insert(polls)
-				.values(poll)
-				.returning({ id: polls.id, slug: polls.slug });
+			await db.insert(polls).values(poll);
 
 			await db.insert(pollOptions).values(
 				form.data.options.map((optionText) => ({
-					pollId: insertedPoll.id,
+					pollId: id,
 					text: optionText
 				}))
 			);
@@ -52,6 +49,6 @@ export const actions: Actions = {
 			});
 		}
 
-		return redirect(302, `/poll/${slug}`);
+		return redirect(302, `/${id}`);
 	}
 };

@@ -8,13 +8,14 @@
 	import { Trash } from '@lucide/svelte';
 	import Label from '$lib/components/label.svelte';
 	import * as Card from '$lib/components/card/index.js';
+	import type { PageProps } from './$types.js';
 
-	let { data } = $props();
+	let { data }: PageProps = $props();
 
 	const form = superForm(data.form, {
 		validators: zod4Client(formSchema)
 	});
-	const { form: formData, enhance } = form;
+	const { form: formData, enhance, submitting } = form;
 
 	function removeOptionByIndex(index: number) {
 		$formData.options = $formData.options.filter((_, i) => i !== index);
@@ -78,7 +79,7 @@
 					{/snippet}
 				</Control>
 			</Field>
-			<Button type="submit">Create</Button>
+			<Button type="submit" loading={$submitting}>Create</Button>
 		</form>
 	</Card.Content>
 </Card.Root>
