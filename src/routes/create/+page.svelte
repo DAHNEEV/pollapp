@@ -40,6 +40,7 @@
 							<Label class="mb-2 text-base leading-4">Question</Label>
 							<Input {...props} bind:value={$formData.question} />
 							<FieldErrors />
+							<!-- todo better error component -->
 						</div>
 					{/snippet}
 				</Control>
@@ -77,7 +78,7 @@
 					{/snippet}
 				</Control>
 			</Field>
-			<Button>Create</Button>
+			<Button type="submit">Create</Button>
 		</form>
 	</Card.Content>
 </Card.Root>
