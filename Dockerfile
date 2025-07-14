@@ -1,8 +1,6 @@
 # builder
 FROM oven/bun:1.2.18-alpine AS builder
 
-RUN apk add --no-cache python3 make g++
-
 WORKDIR /app
 
 COPY bun.lock package.json tsconfig.json svelte.config.js vite.config.ts ./
@@ -15,8 +13,6 @@ RUN bun run build
 
 # runner
 FROM oven/bun:1.2.18-alpine AS runner
-
-RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
 
