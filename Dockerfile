@@ -1,27 +1,24 @@
-# builder
-FROM oven/bun:1.2.18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY bun.lock package.json tsconfig.json svelte.config.js vite.config.ts ./
-COPY drizzle.config.ts ./
-COPY src ./src
-COPY static ./static
+COPY package.json package-lock.json* ./
+RUN npm ci
 
-RUN bun install
-RUN bun run build
+COPY . .
 
-# runner
-FROM oven/bun:1.2.18-alpine AS runner
+RUN npm run build
+
+FROM node:20-alpine
 
 WORKDIR /app
 
+ENV NODE_ENV=production
+
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/build ./build
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/bun.lock ./
-
-RUN bun install --production
+COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 3000
 
-CMD ["bun", "build/index.js"]
+CMD ["node", "build"]
