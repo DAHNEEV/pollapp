@@ -1,5 +1,5 @@
 # builder
-FROM oven/bun:1.2.18 AS builder
+FROM oven/bun:1.2.18:alpine AS builder
 
 RUN apk add --no-cache python3 make g++
 
@@ -14,7 +14,7 @@ RUN bun install
 RUN bun run build
 
 # runner
-FROM oven/bun:1.2.18 AS runner
+FROM oven/bun:1.2.18:alpine AS runner
 
 RUN apk add --no-cache python3 make g++
 
