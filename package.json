@@ -18,6 +18,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",
+		"@sveltejs/adapter-node": "^5.2.13",
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@tailwindcss/vite": "^4.0.0",
@@ -39,7 +40,7 @@
 		"drizzle-kit": "^0.31.4",
 		"drizzle-orm": "^0.40.0",
 		"formsnap": "^2.0.1",
-		"layerchart": "^1.0.11",
+		"layerchart": "^2.0.0-next.30",
 		"mode-watcher": "^1.1.0",
 		"nanoid": "^5.1.5",
 		"sveltekit-superforms": "^2.27.1",
