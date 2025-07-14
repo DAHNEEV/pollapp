@@ -1,4 +1,7 @@
+# builder
 FROM oven/bun:1.2.18 AS builder
+
+RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
 
@@ -10,7 +13,10 @@ COPY static ./static
 RUN bun install
 RUN bun run build
 
+# runner
 FROM oven/bun:1.2.18 AS runner
+
+RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
 
