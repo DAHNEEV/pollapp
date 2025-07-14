@@ -1,0 +1,8 @@
+node_modules
+bun.lockb
+.build
+.vscode
+.git
+*.log
+.env
+.env.*
