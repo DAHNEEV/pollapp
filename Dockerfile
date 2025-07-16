@@ -18,6 +18,7 @@ FROM oven/bun:1.2.18-alpine AS runtime
 RUN apk add --no-cache dumb-init
 WORKDIR /app
 
+COPY --from=builder /app/node_modules      ./node_modules
 COPY --from=builder /app/build             ./build
 COPY --from=builder /app/local.db          ./local.db
 
