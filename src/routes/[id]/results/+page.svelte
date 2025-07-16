@@ -4,6 +4,7 @@
 	import type { PageProps } from './$types';
 	import { BarChart, Labels } from 'layerchart';
 	import Button from '$lib/components/button.svelte';
+	import { invalidateAll } from '$app/navigation';
 
 	let { data }: PageProps = $props();
 
@@ -16,6 +17,20 @@
 			color: 'var(--primary-foreground)'
 		}
 	} satisfies Chart.ChartConfig;
+
+	let descending = $state(false);
+
+	let votes = $derived(
+		descending ? [...data.votes].sort((a, b) => b.count - a.count) : [...data.votes]
+	);
+
+	function toggleSort() {
+		descending = !descending;
+	}
+
+	async function reloadData() {
+		await invalidateAll();
+	}
 </script>
 
 <Card.Root class="w-full max-w-md">
@@ -25,14 +40,15 @@
 	<Card.Content>
 		<div class="mb-4 flex justify-between">
 			<Button href="/{data.poll.id}" variant="outline">Edit vote</Button>
-			<Button href="/{data.poll.id}" disabled={true} variant="outline">Sort data</Button>
+			<Button onclick={reloadData} variant="outline">Reload data</Button>
+			<Button onclick={toggleSort} variant="outline">Sort data</Button>
 		</div>
 		<Chart.Container config={chartConfig}>
 			<BarChart
-				data={data.votes}
+				data={votes}
 				x="count"
 				y="text"
-				labels
+				labels={{ format: (value) => String(Math.floor(value)) }}
 				orientation="horizontal"
 				axis="x"
 				{renderContext}

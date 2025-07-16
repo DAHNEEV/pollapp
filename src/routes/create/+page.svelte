@@ -73,7 +73,7 @@
 					{#snippet children({ props })}
 						<div class="flex flex-col justify-center">
 							<Label class="mb-2 text-base leading-4">Expiration time (hours)</Label>
-							<Input type="number" {...props} bind:value={$formData.expired} />
+							<Input type="number" min="1" {...props} bind:value={$formData.expired} />
 							<FieldErrors />
 						</div>
 					{/snippet}

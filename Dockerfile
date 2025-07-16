@@ -1,24 +1,24 @@
-FROM node:20-alpine AS builder
-
+# ---------- build ----------
+FROM oven/bun:1.2.18-alpine AS builder
 WORKDIR /app
-
-COPY package.json package-lock.json* ./
-RUN npm install
-
+COPY package.json bun.lockb ./
+RUN bun install --frozen-lockfile
 COPY . .
+ENV NODE_ENV=production
+RUN bun run build
 
-RUN npm run build
-
-FROM node:20-alpine
-
+# ---------- runtime ----------
+FROM oven/bun:1.2.18-alpine AS runtime
+RUN apk add --no-cache dumb-init
 WORKDIR /app
+
+COPY --from=builder /app/build        ./build
+COPY --from=builder /app/drizzle      ./drizzle
+COPY --from=builder /app/drizzle.config.ts ./
+COPY --from=builder /app/src/lib/server/db/schema.ts ./schema.ts
 
 ENV NODE_ENV=production
-
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/build ./build
-COPY --from=builder /app/package.json ./package.json
-
+ENV PORT=3000
 EXPOSE 3000
 
-CMD ["node", "build"]
+CMD ["dumb-init", "sh", "-c", "bun run db:migrate && bun run build/index.js"]
