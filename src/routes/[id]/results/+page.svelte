@@ -43,7 +43,11 @@
 	<Card.Content>
 		<div class="mb-4 grid grid-cols-2 gap-3">
 			<Button href="/{data.poll.id}" variant="outline">Edit vote</Button>
-			<CopyButton text={String(page.url)} variant="outline" size="default">
+			<CopyButton
+				text={String(page.url).replace(/\/results$/, '')}
+				variant="outline"
+				size="default"
+			>
 				Copy link
 				{#snippet icon()}
 					<ClipboardIcon />
