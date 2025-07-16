@@ -49,6 +49,6 @@ export const actions: Actions = {
 			});
 		}
 
-		return redirect(302, `/${id}`);
+		return redirect(302, `/${id}/results`);
 	}
 };

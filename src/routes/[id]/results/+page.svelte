@@ -5,6 +5,9 @@
 	import { BarChart, Labels } from 'layerchart';
 	import Button from '$lib/components/button.svelte';
 	import { invalidateAll } from '$app/navigation';
+	import { CopyButton } from '$lib/components/copy-button';
+	import { ClipboardIcon } from '@lucide/svelte';
+	import { page } from '$app/state';
 
 	let { data }: PageProps = $props();
 
@@ -38,8 +41,14 @@
 		<Card.Title class="text-center text-2xl">{data.poll.question}</Card.Title>
 	</Card.Header>
 	<Card.Content>
-		<div class="mb-4 flex justify-between">
+		<div class="mb-4 grid grid-cols-2 gap-3">
 			<Button href="/{data.poll.id}" variant="outline">Edit vote</Button>
+			<CopyButton text={String(page.url)} variant="outline" size="default">
+				Copy link
+				{#snippet icon()}
+					<ClipboardIcon />
+				{/snippet}
+			</CopyButton>
 			<Button onclick={reloadData} variant="outline">Reload data</Button>
 			<Button onclick={toggleSort} variant="outline">Sort data</Button>
 		</div>
