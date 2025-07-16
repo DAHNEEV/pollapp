@@ -5,6 +5,7 @@
       "name": "pollapp",
       "dependencies": {
         "@lucide/svelte": "^0.525.0",
+        "better-sqlite3": "^12.2.0",
         "bits-ui": "^2.8.10",
         "drizzle-kit": "^0.31.4",
         "drizzle-orm": "^0.40.0",
