@@ -31,7 +31,7 @@ A simple MVP app for creating and voting in polls. Built with SvelteKit, Drizzle
 	cd pollapp
 	```
 
-2. Start the app
+2. Start the app:
 
 	```bash
 	docker compose up --build
