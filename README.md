@@ -36,3 +36,5 @@ A simple MVP app for creating and voting in polls. Built with SvelteKit, Drizzle
 	```bash
 	docker compose up --build
 	```
+
+3. The app should be running at http://localhost:3000
